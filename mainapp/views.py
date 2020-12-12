@@ -2,11 +2,15 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'mainapp/index.html')
+    context = {
+        'title': 'GeekShop'
+    }
+    return render(request, 'mainapp/index.html', context)
 
 
 def products(request):
     context = {
+        'title': 'GeekShop - Продукты',
         'products': [
             {'title': 'Худи черного цвета с монограммами adidas Originals',
              'img': 'vendor/img/products/Adidas-hoodie.png', 'price': '6 090,00 руб.',
