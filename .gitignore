@@ -1,3 +1,6 @@
 venv
-__pycache__
+<<<<<<< HEAD
+*/__pycache__/*
 .idea
+=======
+>>>>>>> lesson2
