@@ -14,7 +14,7 @@
                 <h1 class="my-4">GeekShop</h1>
                 <div class="list-group">
                     {% for item in catalog %}
-                        <a href="#" class="list-group-item">{{ item }}</a>
+                        <a href="{% url 'products:product' item.id %}" class="list-group-item">{{ item }}</a>
                     {% endfor %}
                 </div>
 
@@ -70,18 +70,46 @@
                                     <p class="card-text">{{ product.short_description }}</p>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="{% url 'basket:basket_add' product.id%}"><button type="button" class="btn btn-outline-success">Отправить в корзину</button></a>
+                                    <a href="{% url 'basket:basket_add' product.id %}">
+                                        <button type="button" class="btn btn-outline-success">Отправить в корзину
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
                 <!-- /.row -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
+                            <a class="page-link"
+                               href="{% if products.has_previous %} {% url 'products:page' products.previous_page_number category_num%} {% else %} # {% endif %}">
+                                Previous
+                            </a>
+                        </li>
+                        {% for page in products.paginator.page_range %}
+                            <li class="page-item tab">
+                                <a class="page-link"
+                                   href="{% url 'products:page' page category_num %}">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+                            <a class="page-link"
+                               href="{% if products.has_next %} {% url 'products:page' products.next_page_number category_num%} {% else %} # {% endif %}">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <!-- /.col-lg-9 -->
         </div>
         <!-- /.row -->
     </div>
+    {#    <script src="{% static '/js/products.js' %}"></script>#}
 {% endblock %}
 
 

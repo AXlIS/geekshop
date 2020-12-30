@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp',
     'authapp',
-    'basketapp'
+    'basketapp',
+    'adminapp'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = 'authapp.User'
 
 LOGIN_URL = '/auth/login/'
+DATE_INPUT_FORMATS = ['%Y-%m-%d']

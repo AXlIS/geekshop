@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
 from authapp.models import User
+from project import settings
 
 
 class UserLoginForm(AuthenticationForm):
@@ -36,7 +37,14 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserProfileForm(UserChangeForm):
-    avatar = forms.ImageField(widget=forms.FileInput())
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
+    birthday = forms.DateField(
+        required=False,
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.DateInput(attrs={
+            'type': 'date'
+        })
+    )
 
     class Meta:
         model = User
@@ -53,4 +61,3 @@ class UserProfileForm(UserChangeForm):
         self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
         self.fields['birthday'].widget.attrs['id'] = 'inputBirthday'
         self.fields['birthday'].widget.attrs['aria-describedby'] = 'birthdayHelp'
-
