@@ -1,3 +1,11 @@
 body {
     padding-top: 56px;
 }
+
+.remove-button {
+background-color: transparent;
+    color: #138496;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}

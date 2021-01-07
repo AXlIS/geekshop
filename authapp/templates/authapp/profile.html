@@ -3,6 +3,19 @@
 
 {% block css %}
     <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+    <style>
+        * {
+            outline: 0 !important;
+        }
+
+        .remove-button {
+            background-color: transparent;
+            color: #138496;
+            text-decoration: none;
+            border: none;
+        }
+
+    </style>
 {% endblock %}
 {% block content %}
     <div class="container">
