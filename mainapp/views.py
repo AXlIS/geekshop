@@ -16,11 +16,10 @@ def products(request, page=1, category_id=0):
         'price') if category_id > 0 else Product.objects.all().order_by('price')
     paginator = Paginator(goods, 3)
 
-    if request.user.is_authenticated:
-        baskets = Basket.objects.filter(user=request.user)
-        for basket in baskets:
-            print(basket.product)
-
+    # if request.user.is_authenticated:
+    #     baskets = Basket.objects.filter(user=request.user)
+    #     for basket in baskets:
+    #         print(basket.product)
 
     try:
         products_paginator = paginator.page(page)

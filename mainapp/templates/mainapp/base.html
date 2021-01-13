@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <title>{{ title|title }}</title>
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
     {% block css %}{% endblock %}
 </head>
@@ -31,7 +31,8 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auth:profile' %}">{{ user.username }} <i class="fas fa-user-circle"></i></a>
+                        <a class="nav-link" href="{% url 'auth:profile' %}">{{ user.username }} <i
+                                class="fas fa-user-circle"></i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'auth:logout' %}">Выйти <i class="fas fa-sign-out-alt"></i></a>
@@ -56,11 +57,11 @@
 {% block content %}{% endblock %}
 
 <!-- Bootstrap core JavaScript -->
-<script src='{% static "vendor/jquery/jquery.min.js"%}'></script>
-<script src='{% static "vendor/bootstrap/js/bootstrap.bundle.min.js"%}'></script>
+<script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+<script src='{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}'></script>
 
 <!-- FontAwesome script -->
-<script src='{% static "vendor/fontawesome/fontawesome-icons.js"%}' crossorigin="anonymous"></script>
+<script src='{% static "vendor/fontawesome/fontawesome-icons.js" %}' crossorigin="anonymous"></script>
 <script src='{% static "js/basket.js" %}' crossorigin="anonymous"></script>
 
 </body>
