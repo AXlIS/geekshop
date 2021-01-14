@@ -2,11 +2,14 @@
 {% load static %}
 
 {% block content %}
-    <div class="col-lg-5">
+    <div class="col-lg-5" style="
+    position: relative;
+    width: 100%;
+    padding: 3.75rem 0.75rem 0 0.75rem ">
         {% if messages or form.non_field_errors %}
             <div class="alert
-            {% if messages %} alert-success {% else %} alert-warning {% endif %}
-             alert-dismissible fade show" role="alert" style="margin-top: 50px;">
+            alert-warning
+             alert-dismissible fade show" role="alert" style="margin-top: 20px;">
                 {% if messages %}
                     {% for message in messages %}
                         {{ message }}
@@ -36,7 +39,6 @@
             <div class="card-body">
                 <form action="{% url 'authapp:login' %}" method="post">
                     {% csrf_token %}
-
                     <div class="form-group">
                         <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
                         {{ form.username }}

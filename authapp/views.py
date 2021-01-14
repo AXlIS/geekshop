@@ -1,8 +1,38 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.models import User
 from basketapp.models import Basket
+
+
+def send_verify_email(user):
+    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+
+    subject = f'Подтверждение учетной записи {user.email}'
+
+    message = f'Для подтверждения перейдите по ссылке: {settings.DOMAIN}{verify_link}'
+
+    return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+def verify(request, email, activation_key):
+    try:
+        user = User.objects.get(email=email)
+        print('Не удача')
+        if user.activation_key == activation_key:
+            user.is_active = True
+            user.activation_key = None
+            user.save()
+            messages.success(request, 'Вы успешно зарегистрированы!')
+            return HttpResponseRedirect(reverse('auth:login'))
+        messages.success(request, 'Аутентификация не пройдена!')
+        return HttpResponseRedirect(reverse('auth:login'))
+    except:
+        return HttpResponseRedirect(reverse('main'))
+
 
 
 def login(request):
@@ -25,8 +55,9 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрировались!')
+            user = form.save()
+            send_verify_email(user)
+            messages.success(request, 'На вашу почту направлена ссылка для подтверждения регистрации')
             return HttpResponseRedirect(reverse('auth:login'))
     else:
         form = UserRegisterForm()

@@ -134,4 +134,11 @@ EMAIL_HOST_USER = 'django@geekbrains.local'
 EMAIL_HOST_PASSWORD = 'geekshop'
 EMAIL_USE_SSL = False
 
-EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+# EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+
+DOMAIN = 'http://localhost:8000'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/email-messages'
+
+

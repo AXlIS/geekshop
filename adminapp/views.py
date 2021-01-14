@@ -30,33 +30,34 @@ class UserListView(ListView):
 #     }
 #     return render(request, 'adminapp/admin-users-read.html', context)
 
-class UserCreateView(CreateView):
-    model = User
-    template_name = 'adminapp/admin-users-create.html'
-    success_url = reverse_lazy('adminapp:admin_users')
-    form_class = UserAdminRegisterForm
-
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, request, *args, **kwargs):
-        return super(UserCreateView, self).dispatch(request, *args, **kwargs)
-
-
-# @user_passes_test(lambda u: u.is_superuser)
-# def admin_users_create(request):
-#     if request.method == 'POST':
-#         form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('adminapp:admin_users'))
-#         else:
-#             print(form.errors)
-#     else:
-#         form = UserAdminRegisterForm()
+# class UserCreateView(CreateView):
+#     model = User
+#     template_name = 'adminapp/admin-users-create.html'
+#     success_url = reverse_lazy('adminapp:admin_users')
+#     form_class = UserAdminRegisterForm
 #
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'adminapp/admin-users-create.html', context)
+#     @method_decorator(user_passes_test(lambda u: u.is_superuser))
+#     def dispatch(self, request, *args, **kwargs):
+#         return super(UserCreateView, self).dispatch(request, *args, **kwargs)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_users_create(request):
+    if request.method == 'POST':
+        form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:admin_users'))
+        else:
+            print(form.errors)
+    else:
+        form = UserAdminRegisterForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'adminapp/admin-users-create.html', context)
+
 
 class UserUpdateView(UpdateView):
     model = User
@@ -99,7 +100,6 @@ class UserDeleteView(DeleteView):
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def admin_users_remove(request, user_id):
