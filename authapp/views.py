@@ -22,7 +22,7 @@ def verify(request, email, activation_key):
     try:
         user = User.objects.get(email=email)
         print('Не удача')
-        if user.activation_key == activation_key:
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
             user.is_active = True
             user.activation_key = None
             user.save()
