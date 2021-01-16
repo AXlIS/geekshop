@@ -38,6 +38,7 @@ def basket_remove(request, id=None):
         return JsonResponse({'result': result})
 
 
+
 @csrf_exempt
 @login_required
 def basket_edit(request, id, quantity):
