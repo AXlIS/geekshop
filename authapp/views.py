@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
-from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, ShopUserProfileEditForm
 from authapp.models import User
 from basketapp.models import Basket
 
@@ -13,7 +13,7 @@ def send_verify_email(user):
 
     subject = f'Подтверждение учетной записи {user.email}'
 
-    message = f'Для подтверждения перейдите по ссылке: {settings.DOMAIN}{verify_link}'
+    message = f'Для подтверждения перейдите по ссылке: {settings.DOMAIN_NAME}{verify_link}'
 
     return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
@@ -71,16 +71,19 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
-        if form.is_valid():
+        profile_form = ShopUserProfileEditForm(data=request.POST, instance=request.user.shopuserprofile)
+        if form.is_valid() and profile_form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('auth:profile'))
     else:
         form = UserProfileForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
     # baskets = Basket.objects.filter(user=request.user)
 
     context = {
         'form': form,
+        'profile_form': profile_form,
         'baskets': Basket.objects.filter(user=request.user),
         # 'total_quantity': sum(basket.quantity for basket in baskets),
         # 'total_sum': sum(basket.sum() for basket in baskets),
