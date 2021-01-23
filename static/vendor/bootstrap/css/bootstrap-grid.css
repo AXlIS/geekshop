@@ -2302,8 +2302,7 @@ html {
   padding: 1.5rem !important;
 }
 
-.pt-4,
-.py-4 {
+.pt-4 {
   padding-top: 1.5rem !important;
 }
 
@@ -2312,8 +2311,7 @@ html {
   padding-right: 1.5rem !important;
 }
 
-.pb-4,
-.py-4 {
+.pb-4 {
   padding-bottom: 1.5rem !important;
 }
 
