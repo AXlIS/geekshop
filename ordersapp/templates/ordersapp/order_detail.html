@@ -1,0 +1,67 @@
+{% extends "ordersapp/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/order-list-style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div style="width: 70%; margin: auto; padding: 70px 0 0 0 ">
+        {% include 'ordersapp/includes/inc_order_summary.html' %}
+        <div class="basket_list">
+            {% for item in object.orderitems.select_related %}
+                <div class="basket_record">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.product.name }}</h5>
+                            <p class="card-text">{{ item.product.short_description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-light">
+                                <div class="row text-center">
+                                    <div class="col-lg-4">
+                                        <input name="{{ item.id }}" type="number" class="form-control"
+                                               value="{{ item.quantity }}" min="0">
+                                    </div>
+                                    <div class="col-lg-4">{{ item.product.price }} руб.</div>
+                                    <div class="col-lg-4">
+                                        <button class="remove-button">
+                                            <i class="fas fa-trash" id="{{ item.id }}"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% for item in object.orderitems.select_related %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.product.name }}</h5>
+                    <p class="card-text">{{ item.product.short_description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-light">
+                        <div class="row text-center">
+                            <div class="col-lg-4">
+                                <input name="{{ item.id }}" type="number" class="form-control"
+                                       value="{{ item.quantity }}" min="0">
+                            </div>
+                            <div class="col-lg-4">{{ item.product.price }} руб.</div>
+                            <div class="col-lg-4">
+                                <button class="remove-button">
+                                    <i class="fas fa-trash" id="{{ item.id }}"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+        <div class="form-btns" >
+            {% include 'ordersapp/includes/inc_order_actions.html' %}
+        </div>
+    </div>
+{% endblock %}

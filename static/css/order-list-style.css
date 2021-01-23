@@ -1,0 +1,32 @@
+.th-function {
+    width: 20%;
+    text-align: center;
+}
+
+.head-h2 {
+    margin: 100px 0 40px 0;
+}
+
+.body-table {
+    width: 70%;
+    margin: auto
+}
+
+.table-btn {
+    background-color: #343A40;
+    text-decoration: none;
+    margin: 10px 0 10px 20px;
+}
+
+.form-btns{
+    display: flex;
+    flex-wrap: wrap;
+    float: right;
+    flex-direction: column;
+}
+.form-btn{
+    margin: 20px 20px 0 0;
+    color: white;
+
+}
+
