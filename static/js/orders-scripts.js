@@ -54,4 +54,5 @@ window.addEventListener('DOMContentLoaded', () => {
             orderSummeryUpdate(price_arr[orderitem_num], delta_quantity)
         }
     })
+
 })
