@@ -33,7 +33,7 @@ class OrderCreate(CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            basket_items = Basket.objects.filter(user=self.request.user)
+            basket_items = Basket.objects.filter(user=self.request.user).select_related('product')
             OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=basket_items.count())
             formset = OrderFormSet()
             for num, form in enumerate(formset.forms):
@@ -125,7 +125,7 @@ def order_forming_complete(request, pk):
 @receiver(pre_save, sender=Basket)
 @receiver(pre_save, sender=OrderItem)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
-    if update_fields is 'quantity' or 'product':
+    if update_fields == 'quantity' or 'product':
         if instance.pk:
             instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
         else:
