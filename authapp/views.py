@@ -84,7 +84,7 @@ def profile(request):
     context = {
         'form': form,
         'profile_form': profile_form,
-        'baskets': Basket.objects.filter(user=request.user),
+        'baskets': Basket.objects.filter(user=request.user).select_related('product'),
         # 'total_quantity': sum(basket.quantity for basket in baskets),
         # 'total_sum': sum(basket.sum() for basket in baskets),
     }

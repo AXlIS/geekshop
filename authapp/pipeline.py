@@ -1,4 +1,5 @@
 import datetime
+import urllib.request
 from collections import OrderedDict
 from urllib.parse import urlunparse, urlencode
 
@@ -46,7 +47,6 @@ def save_user_profile(backend, user, response, **kwargs):
             raise AuthForbidden('social_core.backends.vk.VKOAuth2')
 
     if data['photo_100']:
-        print(data['photo_100'])
-        user.avatar = data['photo_100']
+        urllib.request.urlretrieve(data['photo_100'], f'{user.pk}.jpg')
 
     user.save()
